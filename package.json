@@ -4,7 +4,7 @@
     "access": "public"
   },
   "version": "0.1.0",
-  "description": "Thin, type-safe hierarchical query-key store for TanStack Query v5 — emits native queryOptions/infiniteQueryOptions with scoped _def handles for partial-key invalidation.",
+  "description": "Type-safe query key factory & store for TanStack Query v5 / React Query — hierarchical query keys, queryOptions & infiniteQueryOptions, contextQueries, mutation keys, and scoped cache invalidation.",
   "author": "Guilherme Eckert (https://github.com/guilhermeseckert)",
   "license": "MIT",
   "packageManager": "pnpm@9.12.1",
@@ -65,10 +65,19 @@
   },
   "keywords": [
     "tanstack",
+    "tanstack-query",
     "react-query",
     "query-key",
+    "query-keys",
+    "query-key-factory",
     "queryOptions",
+    "infinite-query",
+    "mutation-keys",
     "cache",
-    "typescript"
+    "cache-invalidation",
+    "queryClient",
+    "type-safe",
+    "typescript",
+    "react"
   ]
 }
