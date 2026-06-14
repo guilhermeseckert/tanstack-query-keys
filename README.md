@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/tanstack-query-keys"><img src="https://img.shields.io/npm/v/tanstack-query-keys?color=cb3837&logo=npm" alt="npm version"></a>
   <a href="https://github.com/guilhermeseckert/tanstack-query-keys/actions/workflows/ci.yml"><img src="https://github.com/guilhermeseckert/tanstack-query-keys/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://bundlephobia.com/package/tanstack-query-keys"><img src="https://img.shields.io/bundlephobia/minzip/tanstack-query-keys" alt="Bundle size"></a>
+  <a href="https://www.npmjs.com/package/tanstack-query-keys"><img src="https://img.shields.io/npm/unpacked-size/tanstack-query-keys" alt="Unpacked size"></a>
   <a href="https://www.npmjs.com/package/tanstack-query-keys"><img src="https://img.shields.io/npm/types/tanstack-query-keys" alt="Types"></a>
   <a href="./LICENSE.md"><img src="https://img.shields.io/npm/l/tanstack-query-keys" alt="License"></a>
 </p>
