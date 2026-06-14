@@ -4,7 +4,7 @@ Thanks for your interest in improving `tanstack-query-keys`! 🎉
 
 ## Getting started
 
-This project uses [pnpm](https://pnpm.io) (v9+) and Node 18+.
+This project uses [pnpm](https://pnpm.io) (v9+) and Node 20+.
 
 ```bash
 pnpm install        # install dependencies
