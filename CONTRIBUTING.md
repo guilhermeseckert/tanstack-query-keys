@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in improving `@guilhermeseckert/query-store`! 🎉
+Thanks for your interest in improving `tanstack-query-keys`! 🎉
 
 ## Getting started
 

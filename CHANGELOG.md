@@ -1,4 +1,4 @@
-# @guilhermeseckert/query-store
+# tanstack-query-keys
 
 ## 0.1.0
 

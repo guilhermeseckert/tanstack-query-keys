@@ -24,8 +24,8 @@ body:
     id: versions
     attributes:
       label: Versions
-      description: query-store version, @tanstack/react-query version, TypeScript version.
-      placeholder: "query-store 0.1.0, react-query 5.101.0, typescript 5.4"
+      description: tanstack-query-keys version, @tanstack/react-query version, TypeScript version.
+      placeholder: "tanstack-query-keys 0.1.0, react-query 5.101.0, typescript 5.4"
     validations:
       required: true
   - type: checkboxes

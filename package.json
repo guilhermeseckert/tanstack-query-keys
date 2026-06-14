@@ -1,8 +1,5 @@
 {
-  "name": "@guilhermeseckert/query-store",
-  "publishConfig": {
-    "access": "public"
-  },
+  "name": "tanstack-query-keys",
   "version": "0.1.0",
   "description": "Type-safe query key factory & store for TanStack Query v5 / React Query — hierarchical query keys, queryOptions & infiniteQueryOptions, contextQueries, mutation keys, and scoped cache invalidation.",
   "author": "Guilherme Eckert (https://github.com/guilhermeseckert)",
@@ -13,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/guilhermeseckert/query-store.git"
+    "url": "https://github.com/guilhermeseckert/tanstack-query-keys.git"
   },
   "bugs": {
-    "url": "https://github.com/guilhermeseckert/query-store/issues"
+    "url": "https://github.com/guilhermeseckert/tanstack-query-keys/issues"
   },
-  "homepage": "https://github.com/guilhermeseckert/query-store#readme",
+  "homepage": "https://github.com/guilhermeseckert/tanstack-query-keys#readme",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
