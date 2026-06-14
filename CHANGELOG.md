@@ -1,5 +1,11 @@
 # tanstack-query-keys
 
+## 0.1.1
+
+### Patch Changes
+
+- Docs: switch the size badge to a registry-direct `unpacked-size` badge (avoids bundlephobia/packagephobia indexing lag), plus README polish.
+
 ## 0.1.0
 
 ### Minor Changes

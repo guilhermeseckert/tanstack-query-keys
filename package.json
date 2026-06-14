@@ -1,6 +1,6 @@
 {
   "name": "tanstack-query-keys",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type-safe query key factory & store for TanStack Query v5 / React Query — hierarchical query keys, queryOptions & infiniteQueryOptions, contextQueries, mutation keys, and scoped cache invalidation.",
   "author": "Guilherme Eckert (https://github.com/guilhermeseckert)",
   "license": "MIT",
