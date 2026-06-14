@@ -148,3 +148,14 @@ const _optsTransformed: TypedUseQueryOptions<typeof queries.users.detail, string
 void _optsTransformed;
 const _storeProbe: StoreKeys['users'] = queries.users;
 void _storeProbe;
+
+/* 9. `as const` is optional — bare key arrays still work & stay DataTag-branded */
+const noConst = createQueryKeys('users', {
+  detail: (id: string) => ({
+    queryKey: [id], // no `as const`
+    queryFn: () => api.getUser(id),
+  }),
+});
+const cachedNoConst = client.getQueryData(noConst.detail('1').queryKey);
+const _assertNoConst: User | undefined = cachedNoConst; // still typed, not unknown
+void _assertNoConst;

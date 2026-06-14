@@ -76,13 +76,13 @@ export const queries = createQueryStore({
       staleTime: 60_000,
     },
     detail: (id: string) => ({
-      queryKey: [id] as const, // `as const` → exact tuple key
+      queryKey: [id],
       queryFn: () => api.getUser(id),
     }),
   },
   todos: {
     feed: (filter: string) => ({
-      queryKey: [filter] as const,
+      queryKey: [filter],
       queryFn: (ctx: { pageParam: number }) => api.getTodos(ctx.pageParam),
       initialPageParam: 0,
       getNextPageParam: (last) => last.nextCursor,
@@ -90,6 +90,12 @@ export const queries = createQueryStore({
   },
 });
 ```
+
+> **No `as const` needed.** Keys, options, and `getQueryData` typing all work as
+> shown. Add `as const` to a key array _only_ if you want an exact tuple type
+> (`['users','detail', string]`) instead of the default spread
+> (`['users','detail', ...string[]]`) — e.g. for positional key destructuring.
+> Functionally they're identical.
 
 ### Consume
 
@@ -121,12 +127,12 @@ Group sub-queries that depend on a parent context (e.g. a user's likes):
 ```ts
 export const users = createQueryKeys('users', {
   detail: (id: string) => ({
-    queryKey: [id] as const,
+    queryKey: [id],
     queryFn: () => api.getUser(id),
     contextQueries: {
       likes: { queryKey: null, queryFn: () => api.getUserLikes(id) },
       comments: (page: number) => ({
-        queryKey: [page] as const,
+        queryKey: [page],
         queryFn: () => api.getUserComments(id, page),
       }),
     },
@@ -145,7 +151,7 @@ import { createMutationKeys } from 'tanstack-query-keys';
 
 export const userMutations = createMutationKeys('users', {
   update: (id: string) => ({
-    mutationKey: [id] as const,
+    mutationKey: [id],
     mutationFn: (patch: Partial<User>) => api.updateUser(id, patch),
   }),
   delete: null,
