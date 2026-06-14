@@ -1,0 +1,39 @@
+name: 🐛 Bug report
+description: Report something that isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal code snippet or a link to a StackBlitz/repo that reproduces it.
+      render: ts
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: query-store version, @tanstack/react-query version, TypeScript version.
+      placeholder: "query-store 0.1.0, react-query 5.101.0, typescript 5.4"
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I am using @tanstack/react-query v5 (this package does not support v4).
+          required: true
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
