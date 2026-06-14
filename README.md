@@ -1,11 +1,11 @@
-# @guilhermeseckert/query-store
+# tanstack-query-keys
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/npm/v/@guilhermeseckert/query-store?color=cb3837&logo=npm" alt="npm version"></a>
-  <a href="https://github.com/guilhermeseckert/query-store/actions/workflows/ci.yml"><img src="https://github.com/guilhermeseckert/query-store/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://bundlephobia.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/bundlephobia/minzip/@guilhermeseckert/query-store" alt="Bundle size"></a>
-  <a href="https://www.npmjs.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/npm/types/@guilhermeseckert/query-store" alt="Types"></a>
-  <a href="./LICENSE.md"><img src="https://img.shields.io/npm/l/@guilhermeseckert/query-store" alt="License"></a>
+  <a href="https://www.npmjs.com/package/tanstack-query-keys"><img src="https://img.shields.io/npm/v/tanstack-query-keys?color=cb3837&logo=npm" alt="npm version"></a>
+  <a href="https://github.com/guilhermeseckert/tanstack-query-keys/actions/workflows/ci.yml"><img src="https://github.com/guilhermeseckert/tanstack-query-keys/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://bundlephobia.com/package/tanstack-query-keys"><img src="https://img.shields.io/bundlephobia/minzip/tanstack-query-keys" alt="Bundle size"></a>
+  <a href="https://www.npmjs.com/package/tanstack-query-keys"><img src="https://img.shields.io/npm/types/tanstack-query-keys" alt="Types"></a>
+  <a href="./LICENSE.md"><img src="https://img.shields.io/npm/l/tanstack-query-keys" alt="License"></a>
 </p>
 
 > **Type-safe query key factory & store for [TanStack Query](https://tanstack.com/query) v5 (React Query).**
@@ -42,7 +42,7 @@ queryClient.invalidateQueries({ queryKey: queries.users.detail._def }); // all u
 ## Install
 
 ```bash
-npm install @guilhermeseckert/query-store
+npm install tanstack-query-keys
 # peer: @tanstack/react-query >= 5
 ```
 
@@ -51,7 +51,7 @@ npm install @guilhermeseckert/query-store
 ### One store
 
 ```ts
-import { createQueryStore } from '@guilhermeseckert/query-store';
+import { createQueryStore } from 'tanstack-query-keys';
 
 export const queries = createQueryStore({
   users: {
@@ -127,7 +127,7 @@ useQuery(users.detail('1')._ctx.likes);       // typed, ready to use
 ### Mutation keys
 
 ```ts
-import { createMutationKeys } from '@guilhermeseckert/query-store';
+import { createMutationKeys } from 'tanstack-query-keys';
 
 export const userMutations = createMutationKeys('users', {
   update: (id: string) => ({
@@ -144,7 +144,7 @@ userMutations.update._def; // ['users','update'] — handle for all update mutat
 ### Typed inference helpers
 
 ```ts
-import type { inferQueryKeyStore, TypedUseQueryOptions } from '@guilhermeseckert/query-store';
+import type { inferQueryKeyStore, TypedUseQueryOptions } from 'tanstack-query-keys';
 
 export type QueryKeys = inferQueryKeyStore<typeof queries>;
 
