@@ -1,13 +1,22 @@
 # @guilhermeseckert/query-store
 
-> Thin, type-safe **hierarchical query-key store** for **TanStack Query v5**.
-> Emits native `queryOptions`-shaped (`DataTag`-branded) options, and gives every
-> level a `_def` handle for **partial-key invalidation** — the one thing v5's
-> built-in `queryOptions()` doesn't do for you.
+<p align="center">
+  <a href="https://www.npmjs.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/npm/v/@guilhermeseckert/query-store?color=cb3837&logo=npm" alt="npm version"></a>
+  <a href="https://github.com/guilhermeseckert/query-store/actions/workflows/ci.yml"><img src="https://github.com/guilhermeseckert/query-store/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://bundlephobia.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/bundlephobia/minzip/@guilhermeseckert/query-store" alt="Bundle size"></a>
+  <a href="https://www.npmjs.com/package/@guilhermeseckert/query-store"><img src="https://img.shields.io/npm/types/@guilhermeseckert/query-store" alt="Types"></a>
+  <a href="./LICENSE.md"><img src="https://img.shields.io/npm/l/@guilhermeseckert/query-store" alt="License"></a>
+</p>
 
-TanStack Query v5 already solves colocation and typing with `queryOptions()`.
-What it _doesn't_ give you is an organized **key hierarchy** with scoped
-invalidation handles. This library adds exactly that — and nothing else.
+> **Type-safe query key factory & store for [TanStack Query](https://tanstack.com/query) v5 (React Query).**
+> Organize your **query keys** in a typed hierarchy, emit native
+> `queryOptions` / `infiniteQueryOptions`, and invalidate the cache by scope with
+> `_def` handles — everything you need for clean **cache management** in React Query v5.
+
+A modern, v5-first take on the **query-key-factory** pattern. TanStack Query v5
+already solves colocation and typing with `queryOptions()`; what it _doesn't_
+give you is an organized **key hierarchy** with scoped invalidation handles.
+This library adds exactly that — with full `DataTag` typing and zero runtime deps.
 
 ```ts
 queryClient.invalidateQueries({ queryKey: queries.users._def });        // everything user-related
