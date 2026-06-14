@@ -41,10 +41,24 @@ queryClient.invalidateQueries({ queryKey: queries.users.detail._def }); // all u
 
 ## Install
 
+Install the package together with its peer dependency, **TanStack Query v5**:
+
 ```bash
-npm install tanstack-query-keys
-# peer: @tanstack/react-query >= 5
+# npm
+npm install tanstack-query-keys @tanstack/react-query
+
+# pnpm
+pnpm add tanstack-query-keys @tanstack/react-query
+
+# yarn
+yarn add tanstack-query-keys @tanstack/react-query
+
+# bun
+bun add tanstack-query-keys @tanstack/react-query
 ```
+
+> **Requirements:** `@tanstack/react-query` **v5+** (v4 is not supported) ·
+> TypeScript **5.0+** · Node **20+**. Zero runtime dependencies.
 
 ## Usage
 
