@@ -25,19 +25,19 @@ queryClient.invalidateQueries({ queryKey: queries.users.detail._def }); // all u
 
 ## Why
 
-- ✅ **v5-native types.** Keys are branded with `DataTag`, so
+- **v5-native types.** Keys are branded with `DataTag`, so
   `queryClient.getQueryData(queries.users.detail(id).queryKey)` is fully typed —
   no `unknown`.
-- ✅ **Colocate any option.** `staleTime`, `select`, `enabled`, `placeholderData`,
+- **Colocate any option.** `staleTime`, `select`, `enabled`, `placeholderData`,
   `getNextPageParam`, … — anything `useQuery` / `useInfiniteQuery` accepts.
-- ✅ **Infinite queries work.** Pass `initialPageParam` + `getNextPageParam`
+- **Infinite queries work.** Pass `initialPageParam` + `getNextPageParam`
   right in the definition.
-- ✅ **Scoped `_def` handles** at every level for partial-key invalidation.
-- ✅ **Contextual queries** (`contextQueries` → `_ctx`) for related sub-queries.
-- ✅ **Mutation keys** (`createMutationKeys`) with the same ergonomics.
-- ✅ **Inference helpers** — `inferQueryKeyStore`, `inferQueryKeys`,
+- **Scoped `_def` handles** at every level for partial-key invalidation.
+- **Contextual queries** (`contextQueries` → `_ctx`) for related sub-queries.
+- **Mutation keys** (`createMutationKeys`) with the same ergonomics.
+- **Inference helpers** — `inferQueryKeyStore`, `inferQueryKeys`,
   `TypedUseQueryOptions`.
-- ✅ **Zero runtime deps.** Just plain key/options objects.
+- **Zero runtime deps.** Just plain key/options objects.
 
 ## Install
 
