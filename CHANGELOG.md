@@ -1,5 +1,11 @@
 # tanstack-query-keys
 
+## 0.1.2
+
+### Patch Changes
+
+- Docs: remove emoji from README.
+
 ## 0.1.1
 
 ### Patch Changes
