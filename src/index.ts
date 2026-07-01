@@ -15,6 +15,13 @@ type RelativeKey = readonly unknown[] | null | undefined;
 type AnyFetcher = (...args: never[]) => unknown;
 
 /**
+ * `_def` and `_ctx` are reserved for the handles this library emits — schemas
+ * may not use them as scope, leaf, or option names. Enforced again at runtime
+ * for untyped callers.
+ */
+type ReservedKeyGuard = { _def?: never; _ctx?: never };
+
+/**
  * A leaf query definition. You may pass any option `queryOptions()` accepts
  * (`staleTime`, `select`, `enabled`, `placeholderData`, …). `queryKey` here is
  * the *relative* suffix — the scope/leaf prefix is composed for you.
@@ -23,15 +30,16 @@ type QueryLeafConfig = {
   queryKey?: RelativeKey;
   queryFn?: AnyFetcher;
   contextQueries?: QuerySchema;
-} & Record<string, unknown>;
+} & Record<string, unknown> &
+  ReservedKeyGuard;
 
 type DynamicLeaf = (...args: never[]) => readonly unknown[] | QueryLeafConfig;
 
 type AnyLeaf = null | readonly unknown[] | QueryLeafConfig | DynamicLeaf;
 
-type QuerySchema = Record<string, AnyLeaf>;
+type QuerySchema = Record<string, AnyLeaf> & ReservedKeyGuard;
 
-type StoreSchema = Record<string, QuerySchema | null>;
+type StoreSchema = Record<string, QuerySchema | null> & ReservedKeyGuard;
 
 /* -------------------------------------------------------------------------- */
 /*                              Output type model                             */
@@ -115,13 +123,14 @@ type MutationLeafConfig = {
   mutationKey?: RelativeKey;
   mutationFn?: AnyFetcher;
   contextMutations?: MutationSchema;
-} & Record<string, unknown>;
+} & Record<string, unknown> &
+  ReservedKeyGuard;
 
 type DynamicMutationLeaf = (...args: never[]) => readonly unknown[] | MutationLeafConfig;
 
 type AnyMutationLeaf = null | readonly unknown[] | MutationLeafConfig | DynamicMutationLeaf;
 
-type MutationSchema = Record<string, AnyMutationLeaf>;
+type MutationSchema = Record<string, AnyMutationLeaf> & ReservedKeyGuard;
 
 type MutationSuffixOf<L> = L extends { mutationKey: infer K }
   ? K extends Key
@@ -185,6 +194,17 @@ const omitPrototype = <T extends Record<string, unknown>>(value: T): T =>
 
 const isArray = (value: unknown): value is readonly unknown[] => Array.isArray(value);
 
+const RESERVED_NAMES = new Set(['_def', '_ctx']);
+
+/** Runtime mirror of `ReservedKeyGuard` — catches untyped callers and casts. */
+const assertNotReserved = (name: string): void => {
+  if (RESERVED_NAMES.has(name)) {
+    throw new Error(
+      `"${name}" is reserved for the handles this library emits and cannot be used as a scope or leaf name`,
+    );
+  }
+};
+
 const composeKey = (path: Key, suffix: RelativeKey): Key =>
   suffix == null ? [...path] : [...path, ...suffix];
 
@@ -196,6 +216,7 @@ const buildContext = (
 ): Record<string, unknown> => {
   const output: Record<string, unknown> = {};
   for (const name of Object.keys(schema)) {
+    assertNotReserved(name);
     output[name] = buildLeaf([...baseKey, name], schema[name], keyField, ctxField);
   }
   return omitPrototype(output);
@@ -251,6 +272,7 @@ const buildGroup = (
 ): Record<string, unknown> => {
   const output: Record<string, unknown> = {};
   for (const leaf of Object.keys(schema)) {
+    assertNotReserved(leaf);
     output[leaf] = buildLeaf([scope, leaf], schema[leaf], keyField, ctxField);
   }
   output._def = [scope];
@@ -295,21 +317,30 @@ export function createMutationKeys(scope: string, schema?: MutationSchema): unkn
   return buildGroup(scope, schema, 'mutationKey', 'contextMutations');
 }
 
-/** Merge feature-colocated query/mutation groups into one store object. */
+/**
+ * Merge feature-colocated query/mutation groups into one store object.
+ * Throws on duplicate scope names — two groups sharing a scope is almost
+ * certainly a bug, and silently keeping one of them would corrupt the store.
+ */
 export function mergeQueryKeys<Groups extends ReadonlyArray<DefHandle<readonly [string]>>>(
   ...groups: Groups
 ): { [G in Groups[number] as G['_def'][0]]: G } {
-  const output: Record<string, unknown> = {};
+  const output: Record<string, unknown> = Object.create(null);
   for (const group of groups) {
-    output[group._def[0] as string] = group;
+    const scope = group._def[0] as string;
+    if (scope in output) {
+      throw new Error(`Duplicate scope "${scope}" passed to mergeQueryKeys`);
+    }
+    output[scope] = group;
   }
-  return omitPrototype(output) as never;
+  return output as never;
 }
 
 /** Define the whole store in one object. Scopes with `null` are key-only. */
 export function createQueryStore<S extends StoreSchema>(schema: S): StoreOutput<S> {
   const output: Record<string, unknown> = {};
   for (const scope of Object.keys(schema)) {
+    assertNotReserved(scope);
     const leaves = schema[scope];
     output[scope] = leaves ? createQueryKeys(scope, leaves) : createQueryKeys(scope);
   }

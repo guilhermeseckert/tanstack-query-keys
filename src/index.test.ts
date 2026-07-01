@@ -67,10 +67,28 @@ describe('createQueryKeys: weird key segments', () => {
     expect(s.x.queryKey).toEqual(['s', 'x']);
   });
 
-  it('a leaf literally named "_def" is overridden by the scope _def (footgun)', () => {
-    // `_def`/`_ctx` are reserved property names — do not use them as leaf keys.
-    const s = createQueryKeys('s', { _def: null } as never) as { _def: unknown };
-    expect(s._def).toEqual(['s']);
+  it('throws when a leaf uses a reserved name (_def/_ctx)', () => {
+    expect(() => createQueryKeys('s', { _def: null } as never)).toThrow(/reserved/);
+    expect(() => createQueryKeys('s', { _ctx: null } as never)).toThrow(/reserved/);
+  });
+
+  it('throws when a contextQueries entry uses a reserved name', () => {
+    expect(() =>
+      createQueryKeys('s', {
+        x: { queryKey: null, queryFn: noop, contextQueries: { _def: null } },
+      } as never),
+    ).toThrow(/reserved/);
+  });
+
+  it('throws lazily when a dynamic leaf builds a reserved contextQueries entry', () => {
+    const s = createQueryKeys('s', {
+      x: (id: string) => ({
+        queryKey: [id] as const,
+        queryFn: noop,
+        contextQueries: { _ctx: null },
+      }),
+    } as never) as unknown as { x: (id: string) => unknown };
+    expect(() => s.x('1')).toThrow(/reserved/);
   });
 });
 
@@ -274,11 +292,10 @@ describe('mergeQueryKeys', () => {
     expect(mergeQueryKeys()).toEqual({});
   });
 
-  it('last group wins on a duplicated scope name', () => {
+  it('throws on a duplicated scope name instead of silently overwriting', () => {
     const a = createQueryKeys('dup', { x: null });
     const b = createQueryKeys('dup', { y: null });
-    const store = mergeQueryKeys(a, b) as { dup: typeof b };
-    expect(store.dup).toBe(b);
+    expect(() => mergeQueryKeys(a, b)).toThrow(/Duplicate scope "dup"/);
   });
 
   it('can merge query groups and mutation groups together', () => {
@@ -311,6 +328,10 @@ describe('createQueryStore', () => {
     ]);
     expect(store.health._def).toEqual(['health']);
   });
+
+  it('throws when a scope uses a reserved name', () => {
+    expect(() => createQueryStore({ _def: null } as never)).toThrow(/reserved/);
+  });
 });
 
 /* ========================================================================== */
@@ -341,5 +362,9 @@ describe('createMutationKeys', () => {
 
   it('returns only a _def when no schema is given', () => {
     expect(createMutationKeys('users')._def).toEqual(['users']);
+  });
+
+  it('throws when a mutation leaf uses a reserved name', () => {
+    expect(() => createMutationKeys('users', { _ctx: null } as never)).toThrow(/reserved/);
   });
 });

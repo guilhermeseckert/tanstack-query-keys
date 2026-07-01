@@ -149,7 +149,25 @@ void _optsTransformed;
 const _storeProbe: StoreKeys['users'] = queries.users;
 void _storeProbe;
 
-/* 9. `as const` is optional — bare key arrays still work & stay DataTag-branded */
+/* 9. Reserved names (`_def`/`_ctx`) are rejected at the type level ---------- */
+// @ts-expect-error `_def` is reserved as a leaf name
+createQueryKeys('users', { _def: null });
+// @ts-expect-error `_ctx` is reserved as a leaf name
+createQueryKeys('users', { _ctx: null });
+// @ts-expect-error `_def` is reserved as a scope name
+createQueryStore({ _def: { all: null } });
+createQueryKeys('users', {
+  // @ts-expect-error `_def` is reserved inside contextQueries
+  detail: {
+    queryKey: null,
+    queryFn: () => api.getUsers(),
+    contextQueries: { _def: null },
+  },
+});
+// @ts-expect-error `_def` is reserved as a mutation leaf name
+createMutationKeys('users', { _def: null });
+
+/* 10. `as const` is optional — bare key arrays still work & stay DataTag-branded */
 const noConst = createQueryKeys('users', {
   detail: (id: string) => ({
     queryKey: [id], // no `as const`

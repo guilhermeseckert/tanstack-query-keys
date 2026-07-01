@@ -184,6 +184,11 @@ queries.users.detail._def       → ['users', 'detail']
 queries.users.detail(7).queryKey→ ['users', 'detail', 7]
 ```
 
+> **Reserved names.** `_def` and `_ctx` belong to the emitted handles — using
+> them as a scope or leaf name is a type error and throws at runtime. Likewise,
+> `mergeQueryKeys` throws on duplicate scope names instead of silently
+> overwriting one group with another.
+
 ## Credit
 
 The hierarchical-store + `_def` ergonomics are inspired by

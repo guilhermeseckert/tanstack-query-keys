@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "guilhermeseckert/tanstack-query-keys" }
-  ],
+  "changelog": ["@changesets/changelog-github", { "repo": "guilhermeseckert/tanstack-query-keys" }],
   "commit": false,
   "fixed": [],
   "linked": [],
