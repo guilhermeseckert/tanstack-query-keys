@@ -1,5 +1,14 @@
 # tanstack-query-keys
 
+## 0.2.0
+
+### Minor Changes
+
+- [`0591644`](https://github.com/guilhermeseckert/tanstack-query-keys/commit/0591644d5e5f815ad2cbd9e74a704283a76c3b32) Thanks [@guilhermeseckert](https://github.com/guilhermeseckert)! - Fail loudly on schema footguns instead of silently corrupting keys:
+
+  - `_def` and `_ctx` are now rejected as scope/leaf names — both at the type level (compile error) and at runtime (descriptive `Error`). Previously a leaf named `_def` was silently overwritten by the scope handle.
+  - `mergeQueryKeys` now throws on duplicate scope names instead of letting the last group win.
+
 ## 0.1.2
 
 ### Patch Changes
